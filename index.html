@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>爱心魔法阵</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #ffe6e6;
+            position: relative;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            transform: rotate(45deg);
+            animation: beat 1s infinite;
+        }
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+        }
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { top: 0; right: -10px; }
+        @keyframes beat {
+            0% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.2); }
+            100% { transform: rotate(45deg) scale(1); }
+        }
+        #message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: '楷体';
+            font-size: 24px;
+            color: #ff6b6b;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="message">点我收集小确幸❤</div>
+
+    <script>
+        const colors = ['#ff6b6b','#ff8c6b','#ffaf6b','#ffd26b','#ffff6b'];
+        let message = document.getElementById('message');
+        
+        document.addEventListener('click', (e) => {
+            // 创建爱心
+            let heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            heart.style.backgroundColor = colors[Math.floor(Math.random()*5)];
+            document.body.appendChild(heart);
+            
+            // 随机提示语
+            let messages = [
+                '你笑起来真好看~',
+                '今天遇见你是我的幸运',
+                '要永远开心呀',
+                '你比星星还耀眼',
+                '这个爱心是你的专属'
+            ];
+            message.textContent = messages[Math.floor(Math.random()*5)];
+            
+            // 移除动画结束的爱心
+            setTimeout(() => {
+                heart.remove();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
